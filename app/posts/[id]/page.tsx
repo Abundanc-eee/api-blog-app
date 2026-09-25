@@ -4,6 +4,7 @@ import { getPost, getComments, deletePost } from "../../lib/api";
 import type { Post } from "@/types/post";
 import type { Comment } from "@/types/comment";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CommentList from "@/app/components/CommentList";
 
@@ -24,8 +25,7 @@ export default function PostPage({ params }: PostPageProps) {
 
   const [error, setError] = useState("");
   const [commentsError, setCommentsError] = useState("");
-
-
+  const router = useRouter();
 
   useEffect(() => {
     async function loadPostAndComments() {
@@ -105,7 +105,7 @@ export default function PostPage({ params }: PostPageProps) {
 
         await deletePost(postId);
 
-        window.location.href = "/";
+        router.push("/");
     } catch {
         setError("Failed to delete post");
         setDeleting(false);
